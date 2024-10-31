@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brachistochrone - Cycloid Visualization</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Brachistochrone parameters
+        const start = { x: 50, y: 50 }; // Start point
+        const end = { x: 750, y: 550 };   // End point
+        const numPoints = 100; // Number of points to calculate on the curve
+
+        // Function to draw the cycloid
+        function drawCycloid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            // Draw start and end points
+            ctx.fillStyle = 'green';
+            ctx.beginPath();
+            ctx.arc(start.x, start.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.arc(end.x, end.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw the cycloid curve
+            ctx.beginPath();
+            for (let i = 0; i <= numPoints; i++) {
+                const t = (i / numPoints) * Math.PI; // Parameter t from 0 to π
+                const x = start.x + t * (end.x - start.x) / Math.PI; // Cycloid X-coordinate
+                const y = start.y - (1 - Math.cos(t)) * (start.y - end.y) / 2; // Cycloid Y-coordinate
+
+                // Move to the first point
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.strokeStyle = 'blue';
+            ctx.stroke(); // Draw the curve
+        }
+
+        // Draw the initial cycloid
+        drawCycloid();
+    </script>
+</body>
+</html>

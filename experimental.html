@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brachistochrone Visualization</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Example coordinates
+        const start = { x: 50, y: 50 };
+        const end = { x: 750, y: 550 };
+        const mid = {
+            x: (start.x + end.x) / 2,
+            y: (start.y + end.y) / 2
+        };
+
+        // Draw the right-angled triangle
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(mid.x, end.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Draw the trajectory
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.quadraticCurveTo(mid.x, end.y, end.x, end.y);
+        ctx.stroke();
+    </script>
+</body>
+</html>
